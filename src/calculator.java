@@ -7,6 +7,7 @@ class calc extends JFrame{
 		plus, minus, multi, divis, root, mc, mr, mplus, square, mminus, delete, divis2;
 	private String operator = "=";
 	private boolean start = true;
+	public String memory;
 	JTextField f;
 	double result, memoryResult;
 
@@ -211,9 +212,20 @@ class calc extends JFrame{
 				f.setText(""+1/(Double.parseDouble(f.getText())));
 			else if (e.getSource() == square)
 				f.setText(""+Double.parseDouble(f.getText())*Double.parseDouble(f.getText()));
-
+			else if (e.getSource() == mplus)
+				memory=f.getText();
+			else if (e.getSource() == mminus)
+				memory="-"+f.getText();
+			else if (e.getSource() == mr){
+				f.setText(""+memory);
+				start=false;
+			}
+			else if (e.getSource() == mc){
+				memory="0.0";
+			}
+				
 			else {
-				if (start) {
+				if (start==true) {
 					if (e.getSource() == minus) {
 						f.setText("-");
 						start = false;
