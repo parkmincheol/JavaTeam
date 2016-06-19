@@ -1,14 +1,14 @@
-	import java.awt.*;
+import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 
 class calc extends JFrame{
 	private JButton num1, num2, num3, num4, num5, num6, num7, num8, num9, num0, equal, dot,
-		plus, minus, multi, divis, root, mc, mr, mplus, square, mminus, delete, percent, divis2;
+		plus, minus, multi, divis, root, mc, mr, mplus, square, mminus, delete, divis2;
 	private String operator = "=";
 	private boolean start = true;
 	JTextField f;
-	double result;
+	double result, memoryResult;
 
 	
 	public calc(){
@@ -39,7 +39,6 @@ class calc extends JFrame{
 		square = new JButton("Á¦°ö");
 		mminus = new JButton("M-");
 		delete = new JButton("C");
-		percent = new JButton("%");
 		divis2 = new JButton("1/x");
 		
 		
@@ -66,7 +65,6 @@ class calc extends JFrame{
 		square.addActionListener(new MyListener());
 		mminus.addActionListener(new MyListener());
 		delete.addActionListener(new MyListener());
-		percent.addActionListener(new MyListener());
 		divis2.addActionListener(new MyListener());
 		
 		JPanel p = new JPanel();
@@ -99,7 +97,6 @@ class calc extends JFrame{
 		square.setFont(new Font("Serif", Font.BOLD | Font.ITALIC, 30));
 		mminus.setFont(new Font("Serif", Font.BOLD | Font.ITALIC, 30));
 		delete.setFont(new Font("Serif", Font.BOLD | Font.ITALIC, 30));
-		percent.setFont(new Font("Serif", Font.BOLD | Font.ITALIC, 30));
 		divis2.setFont(new Font("Serif", Font.BOLD | Font.ITALIC, 30));
 		
 		p.setBackground(Color.cyan);
@@ -110,7 +107,7 @@ class calc extends JFrame{
 		p.add(mc);
 		p.add(delete);
 		p.add(root);
-		p.add(percent);
+		p.add(square);
 		p.add(divis2);
 		p.add(num1);
 		p.add(num2);
@@ -132,9 +129,136 @@ class calc extends JFrame{
 		this.add(p,BorderLayout.CENTER);
 		setVisible(true);
 	}
+	
 	private class MyListener implements ActionListener{
 		public void actionPerformed(ActionEvent e){
+			if (e.getSource() == delete) {
+				start = true;
+				result = 0;
+				operator = "=";
+				f.setText("0.0");
+			} else if (e.getSource() == num1) {
+				if (start == true)
+					f.setText("1");
+				else
+					f.setText(f.getText() + "1");
+				start = false;
+			}  else if (e.getSource() == num2) {
+				if (start == true)
+					f.setText("2");
+				else
+					f.setText(f.getText() + "2");
+				start = false;
+			}   else if (e.getSource() == num3) {
+				if (start == true)
+					f.setText("3");
+				else
+					f.setText(f.getText() + "3");
+				start = false;
+			}   else if (e.getSource() == num4) {
+				if (start == true)
+					f.setText("4");
+				else
+					f.setText(f.getText() + "4");
+				start = false;
+			}   else if (e.getSource() == num5) {
+				if (start == true)
+					f.setText("5");
+				else
+					f.setText(f.getText() + "5");
+				start = false;
+			}   else if (e.getSource() == num6) {
+				if (start == true)
+					f.setText("6");
+				else
+					f.setText(f.getText() + "6");
+				start = false;
+			}   else if (e.getSource() == num7) {
+				if (start == true)
+					f.setText("7");
+				else
+					f.setText(f.getText() + "7");
+				start = false;
+			}   else if (e.getSource() == num8) {
+				if (start == true)
+					f.setText("8");
+				else
+					f.setText(f.getText() + "8");
+				start = false;
+			}   else if (e.getSource() == num9) {
+				if (start == true)
+					f.setText("9");
+				else
+					f.setText(f.getText() + "9");
+				start = false;
+			}   else if (e.getSource() == num0) {
+				if (start == true)
+					f.setText("0");
+				else
+					f.setText(f.getText() + "0");
+				start = false;
+			}   else if (e.getSource() == dot) {
+				if (start == true)
+					f.setText(".");
+				else
+					f.setText(f.getText() + ".");
+				start = false;
+			} 		
+			
+			else if (e.getSource() == root)
+				f.setText(""+Math.sqrt(Double.parseDouble(f.getText())));
+			else if (e.getSource() == divis2)
+				f.setText(""+1/(Double.parseDouble(f.getText())));
+			else if (e.getSource() == square)
+				f.setText(""+Double.parseDouble(f.getText())*Double.parseDouble(f.getText()));
+
+			else {
+				if (start) {
+					if (e.getSource() == minus) {
+						f.setText("-");
+						start = false;
+					} else if(e.getSource() == plus)
+						operator = "+";
+					else if(e.getSource() == equal)
+						operator = "=";
+					else if(e.getSource() == multi)
+						operator = "*";
+					else if(e.getSource() == divis)
+						operator = "/";
+				} 
+			
+				else {
+					double x = Double.parseDouble(f.getText());
+					calculate(x);
+					if(e.getSource() == plus)
+						operator = "+";
+					else if(e.getSource() == minus)
+						operator = "-";
+					else if(e.getSource() == equal)
+						operator = "=";
+					else if(e.getSource() == multi)
+						operator = "*";
+					else if(e.getSource() == divis)
+						operator = "/";
+					start = true;
+				}
+			}
+
 		}
+	}
+	
+	private void calculate(double n) {
+		if (operator.equals("+"))
+			result += n;
+		else if (operator.equals("-"))
+			result -= n;
+		else if (operator.equals("*"))
+			result *= n;
+		else if (operator.equals("/"))
+			result /= n;
+		else if (operator.equals("="))
+			result = n;
+		f.setText("" + result);
 	}
 }
 public class calculator {
