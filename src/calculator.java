@@ -227,7 +227,7 @@ class calc extends JFrame{
 			}
 			else if (e.getSource() == mr){
 				f.setText(""+memory);
-				start=true;
+				start=false;
 			}
 			else if (e.getSource() == mc){
 				memory=0;
